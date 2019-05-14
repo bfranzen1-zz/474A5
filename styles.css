@@ -1,0 +1,33 @@
+.line {
+    fill: none;
+    stroke: steelblue;
+    stroke-width: 3px;
+  }
+
+  /* Style the dots by assigning a fill and stroke */
+.dot {
+    fill: #0066ffef;
+}
+  
+.focus circle {
+  fill: none;
+  stroke: steelblue;
+}
+
+div.tooltip {
+    position: absolute;
+    text-align: center;
+    width: 400px;
+    height: 300px;
+    padding: 2px;
+    font: 12px sans-serif;
+    background: lightgray;
+    border: 0px;
+    border-radius: 4px;
+    pointer-events: none;
+    box-shadow: 2px 2px 2px black;
+}
+
+#drop {
+    position: absolute;
+}
