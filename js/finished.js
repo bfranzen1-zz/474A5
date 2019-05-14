@@ -2,7 +2,7 @@
 
 (function() {
 
-  let data = "no data";
+  let data = "";
   let svgContainer = ""; // keep SVG reference in global scope
   let svgScatter = "";
   let currData = "" // to store current year selection
