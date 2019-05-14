@@ -39,9 +39,10 @@
     d3.json("./ccodes.json")
         .then((data) => {
             ccodes = data;
-            d3.csv("./data/DataEveryYear.csv")
-                .then((data) => makeLinePlot(data, "AUS"));
       });
+    
+    d3.csv("./data/DataEveryYear.csv")
+        .then((data) => makeLinePlot(data, "AUS"));
     
   }
 
