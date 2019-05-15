@@ -2,7 +2,7 @@
 
 (function() {
 
-  let data = "no data";
+  let data = "";
   let svgContainer = ""; // keep SVG reference in global scope
   let svgScatter = "";
   let currData = "" // to store current year selection
@@ -39,9 +39,10 @@
     d3.json("./ccodes.json")
         .then((data) => {
             ccodes = data;
-            d3.csv("./data/DataEveryYear.csv")
-                .then((data) => makeLinePlot(data, "AUS"));
       });
+    
+    d3.csv("./data/dataEveryYear.csv")
+        .then((data) => makeLinePlot(data, "AUS"));
     
   }
 
@@ -128,7 +129,7 @@
             .attr("cy", (d) => y(d["pop_mlns"]))
             .attr("transform", "translate(100,100)")
             .attr("r", 3)
-            .on("mouseover", () => mouseIn())
+            .on("mouseover", (d) => mouseIn(d["time"]))
             .on("mouseout", () => mouseOut());
 
     // dropdown for countries
@@ -185,7 +186,7 @@
                 .append('circle')
                     .attr('r', 0)
                     .attr('fill', "#0066ffef")
-                    .on("mouseover", () => mouseIn())
+                    .on("mouseover", (d) => mouseIn(d["time"]))
                     .on("mouseout", () => mouseOut())
                     .transition().duration(400)
                     .attr('cx', (d) => x(d["time"]))
@@ -221,22 +222,23 @@
 
 // draws a scatter plot in the svgScatter container that shows
 // fertility rate vs. life expectancy for all countries
-function makeScatterPlot() {
-    let fert = data.map((row) => row["fertility_rate"]);
-    let life = data.map((row) => row["life_expectancy"]);
+function makeScatterPlot(time) {
+    let curr = data.filter((row) => row["time"] == time)
+    let fert = curr.map((row) => row["fertility_rate"]);
+    let life = curr.map((row) => row["life_expectancy"]);
 
     let minMax = findMinMax(fert, life);
 
     let funcs = drawAxes(minMax, "fertility_rate", "life_expectancy", svgScatter, {min: 50, max: 350}, {min: 50, max: 250});
     
     svgScatter.selectAll(".dot")
-        .data(data)
+        .data(curr)
         .enter()
         .append('circle')
             .attr('cx', funcs.x)
             .attr('cy', funcs.y)
             .attr('r', 3)
-            .attr('opacity', 0.3)
+            .attr('opacity', 0.8)
             .attr('fill', "#0066ffef");
 
     svgScatter.append('text')
@@ -335,13 +337,13 @@ function getKey(code) {
 }
 
 // function to handle when user mouses over circle
-function mouseIn() {
+function mouseIn(year) {
     div.transition()
         .duration(200)
         .style("opacity", .9)
         .style("left", (d3.event.pageX) + "px")
         .style("top", (d3.event.pageY) + "px");
-    makeScatterPlot();
+    makeScatterPlot(year);
 }
 
 // function to handle when user mouses over circle
