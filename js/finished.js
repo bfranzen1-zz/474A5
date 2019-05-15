@@ -39,11 +39,9 @@
     d3.json("./ccodes.json")
         .then((data) => {
             ccodes = data;
-      });
-    
-    d3.csv("./data/dataEveryYear.csv")
-        .then((data) => makeLinePlot(data, "AUS"));
-    
+            d3.csv("./data/dataEveryYear.csv")
+              .then((data) => makeLinePlot(data, "AUS"));
+      });    
   }
 
   // filters data and stores it in currData based on passed on country
