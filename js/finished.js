@@ -41,7 +41,7 @@
             ccodes = data;
       });
     
-    d3.csv("./data/DataEveryYear.csv")
+    d3.csv("./data/dataEveryYear.csv")
         .then((data) => makeLinePlot(data, "AUS"));
     
   }
